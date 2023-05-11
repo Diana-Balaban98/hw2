@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import React, {useState} from 'react'
 import Greeting from './Greeting'
 import {UserType} from './HW3'
 import * as timers from "timers";
@@ -54,14 +54,13 @@ const GreetingContainer: React.FC<GreetingContainerPropsType> = ({
 
     const onBlur = () => {
         pureOnBlur(name, setError)
-        console.log("Input blurred");
     }
 
     const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         pureOnEnter(e, addUser)
     }
 
-    const totalUsers = 0 + users.length
+    const totalUsers = users.length
     const lastUserName =  users.length ? users[users.length - 1].name : ""
 
     return (

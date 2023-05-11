@@ -16,7 +16,7 @@ import s2 from '../../s1-main/App.module.css'
 * 11 - в файле Affair.tsx отобразить приходящие данные
 * */
 
-// types
+
 export type AffairPriorityType = 'high' | 'low' | 'middle'
 
 export type AffairType = {
@@ -26,7 +26,6 @@ export type AffairType = {
 }
 export type FilterType = 'all' | AffairPriorityType
 
-// constants
 const defaultAffairs: Array<AffairType> = [
     {_id: 1, name: 'React', priority: 'high'},
     {_id: 2, name: 'anime', priority: 'low'},
@@ -40,7 +39,6 @@ const defaultAffairs: Array<AffairType> = [
     {_id: 10, name: 'coding', priority: 'high'},
 ]
 
-// pure helper functions
 export const filterAffairs = (affairs:  AffairType[], filter: FilterType):  AffairType[] => { // need to fix any
     if (filter === 'low') {
         return affairs.filter((a) => a.priority==='low')
