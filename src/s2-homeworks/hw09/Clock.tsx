@@ -17,7 +17,6 @@ function Clock() {
         // сохранить ид таймера (https://learn.javascript.ru/settimeout-setinterval#setinterval)
     }
 
-
     const stop = () => {
         clearInterval(timerId)
         setTimerId(undefined)
@@ -31,11 +30,19 @@ function Clock() {
         setShow(false)
     }
 
-    const stringTime = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(date) || <br/> // часы24:минуты:секунды (01:02:03)/(23:02:03)/(24:00:00)/(00:00:01) // пишут студенты
-    const stringDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).split('/').join('.') || <br/> // день.месяц.год (01.02.2022) // варианты 01.02.0123/01.02.-123/01.02.12345 не рассматриваем
+    const stringTime = new Intl.DateTimeFormat('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    }).format(date) || <br/> // часы24:минуты:секунды (01:02:03)/(23:02:03)/(24:00:00)/(00:00:01)
+    const stringDate = date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    }).split('/').join('.') || <br/> // день.месяц.год (01.02.2022)
 
     // день недели на английском, месяц на английском (https://learn.javascript.ru/intl#intl-datetimeformat)
-    const stringDay = date.toLocaleDateString('en-us', { weekday:"long"}) || <br/>
+    const stringDay = date.toLocaleDateString('en-us', {weekday: "long"}) || <br/>
     const stringMonth = date.toLocaleDateString('en-us', {month: "long"}) || <br/> // пишут студенты
 
     return (
@@ -70,14 +77,14 @@ function Clock() {
             <div className={s.buttonsContainer}>
                 <SuperButton
                     id={'hw9-button-start'}
-                    disabled={!!timerId} // пишут студенты // задизэйблить если таймер запущен
+                    disabled={!!timerId} // задизэйблить если таймер запущен
                     onClick={start}
                 >
                     start
                 </SuperButton>
                 <SuperButton
                     id={'hw9-button-stop'}
-                    disabled={!timerId} // пишут студенты // задизэйблить если таймер не запущен
+                    disabled={!timerId} // задизэйблить если таймер не запущен
                     onClick={stop}
                 >
                     stop
