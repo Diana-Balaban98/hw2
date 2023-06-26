@@ -8,19 +8,23 @@ import {Loader} from './Loader'
 
 /*
 * 1 - в файле loadingReducer.ts дописать типы и логику
-* 2 - получить isLoading из редакса
+* 2 - получить isLoading из редакса $
 * 3 - дописать функцию setLoading
 * 4 - сделать стили в соответствии с дизайном
 * */
 
 const HW10 = () => {
-    // useSelector, useDispatch // пишет студент
-    const isLoading = false
+    const dispatch = useDispatch()
+    let prealoder = useSelector<AppStoreType, {isLoading: boolean}>(state => state.loading)
+    // useSelector, useDispatch
 
-    const setLoading = () => { // пишет студент // показать крутилку на 1,5 секунд
-        // dispatch
+    const isLoading = prealoder.isLoading
 
-        // setTimeout
+    const setLoading = () => { // показать крутилку на 1,5 секунд
+        dispatch(loadingAC(!prealoder.isLoading))
+        setTimeout(() => {
+            dispatch(loadingAC(prealoder.isLoading))
+        }, 1500)
     }
 
     return (
