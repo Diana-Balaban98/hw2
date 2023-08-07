@@ -20,28 +20,35 @@ const HW13 = () => {
     const [info, setInfo] = useState('')
     const [image, setImage] = useState('')
 
+    const changeValuesOnRequest = (code: string, image: string, info: string, text: string) => {
+        setCode(code)
+        setImage(image)
+        setText(text)
+        setInfo(info)
+    }
+
     const send = (x?: boolean | null) => () => {
         const url =
             x === null
                 ? 'https://xxxxxx.ccc' // имитация запроса на не корректный адрес
                 : 'https://samurai.it-incubator.io/api/3.0/homework/test'
 
-        setCode('')
-        setImage('')
-        setText('')
-        setInfo('...loading')
+        changeValuesOnRequest("", "", "...loading", "")
 
         axios
             .post(url, {success: x})
             .then((res) => {
-                setCode('Код 200!')
-                setImage(success200)
-                // дописать
-
+                changeValuesOnRequest("Код 200!", success200,
+                    "код 200 - обычно означает что скорее всего всё ок)", "...всё ок)")
             })
             .catch((e) => {
-                // дописать
-
+                e.message === "Request failed with status code 500" ?
+                    changeValuesOnRequest("Ошибка 500!", error500,  "ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных", "имитация ошибки на сервере") :
+                e.message === "Request failed with status code 400" ?
+                    changeValuesOnRequest("Ошибка 400!", error400,
+                        "ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!", "Ты не отправил success в body вообще!")
+                 :
+                    changeValuesOnRequest("Network Error", errorUnknown, "AxiosError", "")
             })
     }
 
@@ -55,8 +62,7 @@ const HW13 = () => {
                         id={'hw13-send-true'}
                         onClick={send(true)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={info === '...loading'}
                     >
                         Send true
                     </SuperButton>
@@ -64,8 +70,7 @@ const HW13 = () => {
                         id={'hw13-send-false'}
                         onClick={send(false)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={info === '...loading'}
                     >
                         Send false
                     </SuperButton>
@@ -73,17 +78,16 @@ const HW13 = () => {
                         id={'hw13-send-undefined'}
                         onClick={send(undefined)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={info === '...loading'}
                     >
                         Send undefined
                     </SuperButton>
                     <SuperButton
-                        id={'hw13-send-null'}
-                        onClick={send(null)} // имитация запроса на не корректный адрес
-                        xType={'secondary'}
-                        // дописать
 
+                        id={'hw13-send-null'}
+                        onClick={send(null)} // имитация запроса на некорректный адрес
+                        xType={'secondary'}
+                        disabled={info === '...loading'}
                     >
                         Send null
                     </SuperButton>
