@@ -15,15 +15,15 @@ import {Loader} from './Loader'
 
 const HW10 = () => {
     const dispatch = useDispatch()
-    let prealoder = useSelector<AppStoreType, {isLoading: boolean}>(state => state.loading)
+    let prealoder = useSelector<AppStoreType, boolean>(state => state.loading.isLoading)
     // useSelector, useDispatch
 
-    const isLoading = prealoder.isLoading
+    const isLoading = prealoder
 
     const setLoading = () => { // показать крутилку на 1,5 секунд
-        dispatch(loadingAC(!prealoder.isLoading))
+        dispatch(loadingAC(true))
         setTimeout(() => {
-            dispatch(loadingAC(prealoder.isLoading))
+            dispatch(loadingAC(false))
         }, 1500)
     }
 

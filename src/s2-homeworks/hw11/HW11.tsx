@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './HW11.module.css'
 import s2 from '../../s1-main/App.module.css'
-import { restoreState } from '../hw06/localStorage/localStorage'
+import {restoreState, saveState} from '../hw06/localStorage/localStorage'
 import SuperRange from './common/c7-SuperRange/SuperRange'
 
 /*
@@ -15,7 +15,19 @@ function HW11() {
     const [value1, setValue1] = useState(restoreState<number>('hw11-value1', 0))
     const [value2, setValue2] = useState(restoreState<number>('hw11-value2', 100))
 
-    const change = (event: any, value: any) => {
+   useEffect(() => {
+       saveState("hw11-value1", value1)
+       saveState("hw11-value2", value2)
+   }, [value1, value2])
+
+    const change = (event: Event, value: number | number[]) => {
+        if (Array.isArray(value)) {
+            const [firstValue, secondValue] = value
+            setValue1(firstValue)
+            setValue2(secondValue)
+        } else {
+            setValue1(value)
+        }
         // пишет студент // если пришёл массив - сохранить значения в оба useState, иначе в первый
     }
 
@@ -29,6 +41,8 @@ function HW11() {
                         <span id={'hw11-value'} className={s.number}>{value1}</span>
                         <SuperRange
                             id={'hw11-single-slider'}
+                            value={value1}
+                            onChange={change}
                             // сделать так чтоб value1 изменялось // пишет студент
 
                         />
@@ -37,8 +51,9 @@ function HW11() {
                         <span id={'hw11-value-1'} className={s.number}>{value1}</span>
                         <SuperRange
                             id={'hw11-double-slider'}
+                            value={[value1, value2]}
+                            onChange={change}
                             // сделать так чтоб value1/2 изменялось // пишет студент
-
                         />
                         <span id={'hw11-value-2'} className={s.number}>{value2}</span>
                     </div>
