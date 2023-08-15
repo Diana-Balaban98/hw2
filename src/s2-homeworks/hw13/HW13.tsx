@@ -38,17 +38,19 @@ const HW13 = () => {
         axios
             .post(url, {success: x})
             .then((res) => {
+                console.log(res)
                 changeValuesOnRequest("Код 200!", success200,
-                    "код 200 - обычно означает что скорее всего всё ок)", "...всё ок)")
+                    res.data.info, res.data.errorText
+                )
             })
             .catch((e) => {
                 e.message === "Request failed with status code 500" ?
-                    changeValuesOnRequest("Ошибка 500!", error500,  "ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных", " эмитация ошибки на сервере") :
+                    changeValuesOnRequest("Ошибка 500!", error500, e.response.data.info, e.response.data.errorText) :
                 e.message === "Request failed with status code 400" ?
                     changeValuesOnRequest("Ошибка 400!", error400,
-                        "ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!", "Ты не отправил success в body вообще!")
+                        e.response.data.info, e.response.data.errorText)
                  :
-                    changeValuesOnRequest("Network Error", errorUnknown, "AxiosError", "")
+                    changeValuesOnRequest("Error", errorUnknown, e.message, e.name)
             })
     }
 
