@@ -27,31 +27,27 @@ const getTechs = (find: string) => {
 const HW14 = () => {
     const [find, setFind] = useState('')
     const [isLoading, setLoading] = useState(false)
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams({})
     const [techs, setTechs] = useState<string[]>([])
+
+
 
     const sendQuery = (value: string) => {
         setLoading(true)
         getTechs(value)
             .then((res) => {
-                // @ts-ignore
-                setTechs(res.data.techs)
-                // делает студент
-
-                // сохранить пришедшие данные
-
-                //
-            })
+                if (res) {
+                    setTechs(res.data.techs)
+                }
+                setLoading(false)
+            }).catch(err => {
+            console.log(err)
+        })
     }
 
     const onChangeText = (value: string) => {
         setFind(value)
-        // делает студент
-
-        // добавить/заменить значение в квери урла
-        // setSearchParams(
-
-        //
+        setSearchParams({find: value})
     }
 
     useEffect(() => {
@@ -65,6 +61,7 @@ const HW14 = () => {
             {t}
         </div>
     ))
+
 
     return (
         <div id={'hw14'}>
