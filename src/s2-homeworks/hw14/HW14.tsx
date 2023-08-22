@@ -36,13 +36,10 @@ const HW14 = () => {
         setLoading(true)
         getTechs(value)
             .then((res) => {
-<<<<<<< HEAD
                 if (res) {
                     setTechs(res.data.techs)
                 }
-=======
                 setTechs(res!.data.techs)
->>>>>>> c0800420b66ab1e07f1208804b225a94e505a0cc
                 setLoading(false)
             }).catch(err => {
             console.log(err)
