@@ -48,39 +48,32 @@ const HW15 = () => {
     const [techs, setTechs] = useState<TechType[]>([])
 
     const sendQuery = (params: any) => {
-        debugger
         setLoading(true)
         getTechs(params)
             .then((res: any) => {
                 setTechs(res.data.techs)
-                setTotalCount(res.data.totalCount)
+                setTotalCount(res.data.totalCount) // 36
                 setLoading(false)
             })
 
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
-        debugger
         setPage(newPage)
         setCount(newCount)
-        sendQuery({page, count})
-      //  setSearchParams({page: String(page)})
+        sendQuery({page: newPage, count: newCount})
+        setSearchParams({page: String(newPage)})
     }
 
     const onChangeSort = (newSort: string) => {
-        // делает студент
-
-        // setSort(
+        setSort(newSort)
+        setPage(1)
         // setPage(1) // при сортировке сбрасывать на 1 страницу
-
-        // sendQuery(
-        // setSearchParams(
-
-        //
+        sendQuery({sort: newSort})
+        setSearchParams({page: String(page), sort: newSort})
     }
 
     useEffect(() => {
-        debugger
         const params = Object.fromEntries(searchParams)
         sendQuery({page: params.page, count: params.count})
         setPage(+params.page || 1)
@@ -105,7 +98,6 @@ const HW15 = () => {
 
             <div className={s2.hw}>
                 {idLoading && <div id={'hw15-loading'} className={s.loading}>Loading...</div>}
-
                 <SuperPagination
                     page={page}
                     itemsCountForPage={count}
